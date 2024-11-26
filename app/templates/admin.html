@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Marketplace</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_styles.css') }}">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <h5 class="sidebar-heading">Admin Panel</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard" onclick="showSection('dashboard')">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products" onclick="showSection('products')">Manage Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#users" onclick="showSection('users')">Manage Users</a>
+                    </li>
+                    <!-- New link to admin2.html -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin2.html">Go to Admin2</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <!-- Dashboard Section -->
+            <section id="dashboard">
+                <h2>Dashboard</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-body">Total Products</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <span id="totalProducts">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-success text-white mb-4">
+                            <div class="card-body">Total Users</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <span id="totalUsers">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product Management Section -->
+            <section id="products" style="display: none;">
+                <h2>Manage Products</h2>
+                <!-- Add Search Form -->
+                <div class="input-group mb-3">
+                    <input type="text" id="searchQuery" class="form-control" placeholder="Search for products...">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="searchButton">Search</button>
+                    </div>
+                </div>
+
+                <!-- Add a container to display search results -->
+                <div id="searchResults"></div>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">Add Product</button>
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Classification</th>
+                            <th>Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTable"></tbody>
+                </table>
+            </section>
+
+            <!-- User Management Section -->
+            <section id="users" style="display: none;">
+                <h2>Manage Users</h2>
+
+                <!-- Registration Form -->
+                <h3>Register User</h3>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="firstname">First Name:</label>
+                        <input type="text" id="firstname" name="firstname" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phonenumber">Phone Number:</label>
+                        <input type="text" id="phonenumber" name="phonenumber" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+
+                <!-- Login Form -->
+                <h3>Login User</h3>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginPhonenumber">Phone Number:</label>
+                        <input type="text" id="loginPhonenumber" name="phonenumber" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password:</label>
+                        <input type="password" id="loginPassword" name="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Phone Number</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTable"></tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</div>
+<!--<button class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">Add Product</button>-->
+
+
+<!-- Modals for Adding/Editing Products -->
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProductForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label >Product Name:</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Price:</label>
+                            <input type="number" name="price" class="form-control" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label >Classification:</label>
+                            <input type="text" name="classification" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label >Upload Image:</label>
+                            <input type="file" name="picture" class="form-control" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Update Product Modal -->
+<div class="modal fade" id="updateProductModal" tabindex="-1" aria-labelledby="updateProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateProductModalLabel">Update Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="updateProductForm">
+                <div class="modal-body">
+                    <input type="hidden" id="updateProductId">
+                    <div class="mb-3">
+                        <label for="updateProductName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="updateProductName" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateProductPrice" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="updateProductPrice" name="price">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateProductClassification" class="form-label">Classification</label>
+                        <input type="text" class="form-control" id="updateProductClassification" name="classification">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateProductPicture" class="form-label">Picture</label>
+                        <input type="file" class="form-control" id="updateProductPicture" name="picture">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

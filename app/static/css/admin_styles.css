@@ -1,0 +1,11 @@
+.sidebar {
+    height: 100vh;
+    padding-top: 20px;
+}
+
+.sidebar-heading {
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}

@@ -1,0 +1,260 @@
+openapi: 3.0.0
+info:
+  title: Marketplace API
+  description: API documentation for the Marketplace application.
+  version: "1.0.0"
+
+paths:
+
+  /register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Invalid input
+
+  /login:
+    post:
+      summary: Login a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User logged in successfully
+        '400':
+          description: Invalid input
+  /account:
+    get:
+      summary: Get account information
+      responses:
+        '200':
+          description: Account information
+        '400':
+          description: Invalid input
+  /get_profile:
+    get:
+      summary: Get profile information
+      responses:
+        '200':
+          description: Profile information
+        '400':
+          description: Invalid input
+  /update_profile:
+    put:
+      summary: Update profile information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Profile updated successfully
+        '400':
+          description: Invalid input
+  /add_to_cart/{product_id}:
+    post:
+      summary: Add a product to the cart
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Product added to cart successfully
+        '400':
+          description: Invalid input
+  /get_cart:
+    get:
+      summary: Get the cart
+      responses:
+        '200':
+          description: A list of products in the cart
+        '400':
+          description: Invalid input
+  /logout:
+    post:
+      summary: Logout a user
+      responses:
+        '200':
+          description: User logged out successfully
+        '400':
+          description: Invalid input
+
+  /get_users:
+    get:
+      summary: Retrieve all users
+      responses:
+        '200':
+          description: A list of users
+        '400':
+          description: Invalid input
+  /get_user_count:
+    get:
+      summary: Get the count of users
+      responses:
+        '200':
+          description: A count of users
+        '400':
+          description: Invalid input
+  /delete_user/{user_id}:
+    delete:
+      summary: Delete a user
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User deleted successfully
+        '400':
+          description: Invalid input
+          
+  /add_product:
+    post:
+      summary: Add a new product
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                classification:
+                  type: string
+                picture:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Product added successfully
+        '400':
+          description: Invalid input
+
+  /get_products:
+    get:
+      summary: Retrieve all products
+      responses:
+        '200':
+          description: A list of products
+
+  /update_product/{product_id}:
+    put:
+      summary: Update a product
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                classification:
+                  type: string
+                picture:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Product updated successfully
+        '400':
+          description: Invalid input
+
+  /delete_product/{product_id}:
+    delete:
+      summary: Delete a product
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Product deleted successfully
+        '400':
+          description: Invalid input
+
+  /search_product:
+    get:
+      summary: Search for a product
+      parameters:
+        - in: query
+          name: name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of products
+        '400':
+          description: Invalid input
+  /get_product/{product_id}:
+    get:
+      summary: Get a product
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A product
+        '400':
+          description: Invalid input
+
+  /get_product_cunt:
+    get:
+      summary: Get the count of products
+      responses:
+        '200':
+          description: A count of products
+        '400':
+          description: Invalid input
+

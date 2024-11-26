@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container my-4">
+        <h1 class="text-center">Account Information</h1>
+
+        <!-- User Info Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">User Info</h2>
+                <p><strong>Name:</strong> <span id="user-name"></span></p>
+                <p><strong>Phone:</strong> <span id="user-phone"></span></p>
+            </div>
+        </div>
+
+                <!-- Products Section -->
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Products</h2>
+                <div class="row" id="product-list">
+                    <!-- Products will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="{{ url_for('static', filename='js/account.js') }}"></script>
+</body>
+</html>
