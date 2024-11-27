@@ -82,4 +82,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 Contributions are welcome! Please open an issue or submit a pull request.
 
 ## Contact
-For any inquiries, please contact [your email address].
+For any inquiries, please contact baxtiyorovzarif@gmail.com.
